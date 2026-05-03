@@ -22,8 +22,8 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Name and role are required.' });
     }
 
-    if (!['parent', 'student'].includes(role)) {
-      return res.status(400).json({ message: 'Role must be parent or student.' });
+    if (!['parent', 'student', 'teacher'].includes(role)) {
+      return res.status(400).json({ message: 'Role must be parent, student, or teacher.' });
     }
 
     let finalEmail = email ? email.toLowerCase() : email;

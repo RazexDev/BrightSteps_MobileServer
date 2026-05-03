@@ -164,12 +164,16 @@ router.patch('/:studentId/assign', protect, async (req, res) => {
  */
 router.put('/profile/:id', protect, upload.single('profilePic'), async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { name, password, parentPin } = req.body;
     const updateFields = {};
 
     // Update name if provided
     if (name && name.trim()) {
       updateFields.name = name.trim();
+    }
+
+    if (parentPin && parentPin.trim()) {
+      updateFields.parentPin = parentPin.trim();
     }
 
     // Hash and update password if provided

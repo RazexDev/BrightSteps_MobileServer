@@ -153,4 +153,41 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// PUT route (Update Resource)
+const cloudinary = require('../config/cloudinary');
+router.put('/:id', upload.single('file'), async (req, res) => {
+  try {
+    const { title, type, fileUrl, instructionalText, targetSkill, studentName, requiredLevel, offlineInstructions } = req.body;
+    let updateData = { title, type, instructionalText, targetSkill, studentName, requiredLevel, offlineInstructions };
+
+    if (fileUrl) updateData.fileUrl = fileUrl;
+    if (req.file) {
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { resource_type: "auto" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        stream.end(req.file.buffer);
+      });
+      updateData.fileUrl = result.secure_url;
+    }
+
+    const updatedResource = await Resource.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+    
+    if (!updatedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+    res.status(200).json(updatedResource);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
