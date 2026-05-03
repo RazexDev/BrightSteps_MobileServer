@@ -40,6 +40,64 @@ app.use((req, res, next) => {
   next();
 });
 
+// Root Route for Viva APK Download
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Download BrightSteps</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                background-color: #0f172a;
+                color: #f8fafc;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .container {
+                text-align: center;
+                background-color: #1e293b;
+                padding: 40px;
+                border-radius: 16px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+                max-width: 400px;
+                width: 90%;
+            }
+            .logo { font-size: 50px; margin-bottom: 20px; }
+            h1 { margin: 0 0 10px; font-size: 24px; font-weight: 600; }
+            p { color: #94a3b8; margin-bottom: 30px; line-height: 1.5; font-size: 15px;}
+            .btn {
+                display: inline-block;
+                background-color: #3b82f6;
+                color: white;
+                text-decoration: none;
+                padding: 14px 28px;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 16px;
+                transition: background 0.2s;
+            }
+            .btn:hover { background-color: #2563eb; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo">🚀</div>
+            <h1>BrightSteps App</h1>
+            <p>Welcome! Click the button below to view and install the latest Android APK for evaluation.</p>
+            <a href="https://expo.dev/accounts/razexdev/projects/brightsteps/builds/767098c3-74df-480f-b0c1-dfed25a4e692" class="btn" target="_blank">Download APK (Expo)</a>
+        </div>
+    </body>
+    </html>
+  `);
+});
+
 // Test Route
 app.get('/api/test', (req, res) => {
   res.json({ success: true, message: 'Backend is reachable!' });
